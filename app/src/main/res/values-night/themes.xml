@@ -1,7 +1,73 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.EcoCrafters" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.EcoCrafters" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:buttonStyle">@style/Theme.EcoCrafters.Button</item>
+        <item name="toolbarStyle">@style/Theme.EcoCrafters.ToolBar</item>
+        <item name="background">@android:color/background_dark</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.Button" parent="Widget.Material3.Button">
+        <item name="android:fontFamily">@font/motiva_sans_bold</item>
+    </style>
+
+
+    <style name="Theme.EcoCrafters.ToolBar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?colorSurfaceVariant</item>
+        <item name="android:textColorPrimary">?colorOnSurfaceVariant</item>
+        <item name="colorControlNormal">?colorOnSurfaceVariant</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/motiva_sans_font</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.TitleMedium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/motiva_sans_medium</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.TitleSmall" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/motiva_sans_medium</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/poppins_font</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/poppins_font</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/poppins_font</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.StartingTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:buttonStyle">@style/Theme.EcoCrafters.Button</item>
+        <item name="toolbarStyle">@style/Theme.EcoCrafters.ToolBar</item>
+        <item name="background">@color/background_green_night</item>
+        <item name="colorOnBackground">@color/on_background_green_night</item>
+        <item name="colorPrimary">@color/primary_green_night</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.CircleImageViewStyle" >
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Theme.EcoCrafters.SpinnersTheme">
+        <item name="android:paddingLeft">0dp</item>
+
+        <item name="android:background">@drawable/spinner_background</item>
     </style>
 </resources>

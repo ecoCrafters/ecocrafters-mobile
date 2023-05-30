@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_outline"
+        android:title="@string/rumah" />
+    <item
+        android:id="@+id/navigation_search"
+        android:enabled="true"
+        android:icon="@drawable/ic_search"
+        android:title="@string/cari" />
+    <item
+        android:id="@+id/navigation_scan"
+        android:enabled="true"
+        android:icon="@drawable/ic_cube_scan"
+        android:title="@string/scan" />
+    <item
+        android:id="@+id/navigation_create"
+        android:enabled="true"
+        android:icon="@drawable/ic_add"
+        android:title="@string/buat_post" />
+    <item
+        android:id="@+id/navigation_more"
+        android:enabled="true"
+        android:icon="@drawable/ic_more_horizontal"
+        android:title="@string/tambahan" />
+
+</menu>
