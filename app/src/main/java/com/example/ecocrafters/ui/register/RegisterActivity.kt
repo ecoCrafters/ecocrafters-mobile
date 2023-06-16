@@ -3,12 +3,13 @@ package com.example.ecocrafters.ui.register
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.ecocrafters.R
 import com.example.ecocrafters.data.ResultOf
 import com.example.ecocrafters.data.remote.response.AuthResponse
@@ -16,7 +17,7 @@ import com.example.ecocrafters.databinding.ActivityRegisterBinding
 import com.example.ecocrafters.ui.main.MainActivity
 import com.example.ecocrafters.utils.EditTextValidator
 import com.example.ecocrafters.utils.ViewModelFactory
-import kotlinx.coroutines.flow.collectLatest
+import com.example.ecocrafters.utils.showToast
 import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
@@ -65,6 +66,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 )
             })
         }
+
+        startSubscription()
+    }
+
+    private fun startSubscription() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.registerState.collect{
+                    renderResult(it)
+                }
+            }
+        }
     }
 
     override fun onClick(v: View) {
@@ -80,9 +93,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
                         lifecycleScope.launch {
                             viewModel.registerUser(fullName, username, email, password)
-                                .collectLatest {
-                                    renderResultOf(it)
-                                }
                         }
                     } else {
                         showToast(getString(R.string.informasi_akun_kosong_atau_tidak_valid))
@@ -92,7 +102,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun renderResultOf(result: ResultOf<AuthResponse>?) {
+    private fun renderResult(result: ResultOf<AuthResponse>?) {
         when (result) {
             ResultOf.Loading -> {
                 showLoading(true)
@@ -139,13 +149,5 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 View.VISIBLE
             }
         }
-    }
-
-    private fun showToast(msg: String) {
-        Toast.makeText(
-            this,
-            msg,
-            Toast.LENGTH_SHORT
-        ).show()
     }
 }

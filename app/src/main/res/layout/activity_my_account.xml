@@ -26,21 +26,21 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="232dp">
 
                 <ImageView
-                    android:id="@+id/imageView7"
+                    android:id="@+id/iv_banner_my_account"
                     android:layout_width="match_parent"
                     android:layout_height="232dp"
                     android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_back"
+                    android:id="@+id/btn_back_my_account"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="16dp"
@@ -60,7 +60,7 @@
                     app:shapeAppearanceOverlay="@style/Theme.EcoCrafters.CircleImageViewStyle" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_edit_myaccount"
+                    android:id="@+id/btn_edit_my_account"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="8dp"
@@ -84,13 +84,14 @@
                     android:layout_width="96dp"
                     android:layout_height="96dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="4dp"
                     app:cardBackgroundColor="@color/color_background_semi_transparent"
                     app:cardCornerRadius="48dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_back">
+                    app:layout_constraintTop_toBottomOf="@+id/btn_back_my_account">
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/iv_avatars_my_account"
                         android:layout_width="88dp"
                         android:layout_height="88dp"
                         android:layout_gravity="center"
@@ -101,63 +102,63 @@
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
-                    android:layout_height="76dp"
+                    android:layout_height="0dp"
                     android:foreground="@drawable/drawable_user_gradients"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_banner_my_account"
                     app:layout_constraintTop_toBottomOf="@+id/cardView7" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/tv_username_my_account"
                     style="@style/Theme.EcoCrafters.TitleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="gthght"
-                    app:layout_constraintBottom_toTopOf="@+id/textView11"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:layout_marginTop="4dp"
+                    android:text="@string/username_placeholder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView7" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tv_fullname_my_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    style="@style/Theme.EcoCrafters.BodySmall"
+                    android:text="@string/full_name_placeholder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_username_my_account"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_subtitle_my_account"/>
+
+                <TextView
+                    android:id="@+id/tv_subtitle_my_account"
                     style="@style/Theme.EcoCrafters.BodySmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginBottom="4dp"
-                    android:text="1,800 EcoPoints • 4 Pengikut • 12 Feb, 2023"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView7"
-                    app:layout_constraintEnd_toStartOf="@+id/materialButton2"
+                    android:text="@string/supporting_my_account_placeholder"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_banner_my_account"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_follow_myaccount"
+                <ProgressBar
+                    android:id="@+id/pb_my_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:textColor="?colorOnBackground"
-                    android:text="@string/follow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/view" />
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--            <androidx.appcompat.widget.Toolbar-->
-<!--                android:id="@+id/toolbar"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                app:layout_collapseMode="pin"-->
-<!--                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
-
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tl_followers"
+            android:id="@+id/tl_my_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            app:tabMode="scrollable"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -171,7 +172,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp_followers"
+            android:id="@+id/vp_my_account"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_anchor="@+id/linearLayout"

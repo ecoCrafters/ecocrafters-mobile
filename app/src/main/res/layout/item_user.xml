@@ -30,10 +30,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="chiptaan_tuhan" />
+            tools:text="@string/username_placeholder" />
 
         <TextView
             android:id="@+id/tv_user_desc"
@@ -43,10 +43,10 @@
             android:layout_gravity="bottom"
             android:layout_marginStart="80dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="8dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:text="1,800 EcoPoints" />
+            tools:text="@string/ecopoints" />
 
         <View
             android:id="@+id/divider7"

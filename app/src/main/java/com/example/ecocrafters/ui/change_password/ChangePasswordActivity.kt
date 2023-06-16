@@ -5,19 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.ecocrafters.R
 import com.example.ecocrafters.data.ResultOf
 import com.example.ecocrafters.data.remote.response.CodeResponse
 import com.example.ecocrafters.databinding.ActivityChangePasswordBinding
 import com.example.ecocrafters.utils.EditTextValidator
 import com.example.ecocrafters.utils.ViewModelFactory
-import kotlinx.coroutines.flow.collectLatest
+import com.example.ecocrafters.utils.showToast
 import kotlinx.coroutines.launch
 import java.util.Timer
 import java.util.TimerTask
@@ -38,7 +39,6 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         code = intent?.getStringExtra(CODE_EXTRA) ?: ""
-        Log.d("code", code)
 
         setSupportActionBar(binding.toolbarChangePassword)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -83,7 +83,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun renderResultOf(result: ResultOf<CodeResponse>) {
+    private fun renderResult(result: ResultOf<CodeResponse>) {
         when (result) {
             ResultOf.Loading -> {
                 showLoading(true)
@@ -96,7 +96,7 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
                     binding.apply {
                         val completeAnim = ivCompleteChangePassword.drawable
                         ivCompleteChangePassword.isVisible = true
-                        ovelayCheckCode.isVisible = true
+                        overlayCheckCode.isVisible = true
                         if (completeAnim is AnimatedVectorDrawable) {
                             Log.d("testanim", "onCreate: instancefound" + completeAnim.toString())
                             val animation = completeAnim as AnimatedVectorDrawable?
@@ -127,22 +127,16 @@ class ChangePasswordActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         if (isInputValid()) {
             lifecycleScope.launch {
-                viewModel.changePassword(code, binding.edPasswordChange.text.toString())
-                    .collectLatest {
-                        renderResultOf(it)
-                    }
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.changePassword(code, binding.edPasswordChange.text.toString())
+                        .collect {
+                            renderResult(it)
+                        }
+                }
             }
         } else {
             showToast(getString(R.string.password_tidak_valid))
         }
-    }
-
-    private fun showToast(msg: String) {
-        Toast.makeText(
-            this,
-            msg,
-            Toast.LENGTH_SHORT
-        ).show()
     }
 
     companion object {

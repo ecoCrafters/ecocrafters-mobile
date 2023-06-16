@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/frame_account_security"
     tools:context=".ui.account_security.AccountSecurityFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -42,5 +43,30 @@
             app:srcCompat="@drawable/ic_lock_reset" />
 
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/overlay_account_security"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:background="@color/color_background_semi_transparent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/pb_account_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/overlay_account_security"
+        app:layout_constraintEnd_toEndOf="@id/overlay_account_security"
+        app:layout_constraintStart_toStartOf="@id/overlay_account_security"
+        app:layout_constraintTop_toTopOf="@+id/overlay_account_security" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

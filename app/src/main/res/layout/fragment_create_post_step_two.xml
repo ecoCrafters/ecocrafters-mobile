@@ -12,8 +12,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Lanjut"
+        android:text="@string/selanjutnya"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back_create_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/kembali"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -21,31 +31,31 @@
         style="@style/Theme.EcoCrafters.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2/3"
+        android:text="@string/_2_3"
         app:layout_constraintBottom_toBottomOf="@+id/btn_next_create_two"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_next_create_two" />
 
     <TextView
-        android:id="@+id/tv_add_ingredients_create_two"
+        android:id="@+id/tv_add_ingredients_create_post"
         style="@style/Theme.EcoCrafters.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Tambahkan Bahan Kerajinan"
+        android:text="@string/tambahkan_bahan_kerajinan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_next_create_two" />
 
     <TextView
-        android:id="@+id/tv_ingredients_create_two"
+        android:id="@+id/tv_ingredients_create_post"
         style="@style/Theme.EcoCrafters.TitleMedium"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Tambahkan Bahan Kerajinan"
+        android:text="@string/bahan_kerajinan"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_ingredients_create" />
 
@@ -55,14 +65,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Bahan Kerajinan"
-        app:endIconMode="clear_text"
+        android:hint="@string/bahan_kerajinan"
+        app:endIconDrawable="@drawable/ic_add"
+        app:endIconMode="custom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_add_ingredients_create_two">
+        app:layout_constraintTop_toBottomOf="@+id/tv_add_ingredients_create_post">
 
-        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox.Dense"
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
+            android:id="@+id/ed_ingredients_create"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
@@ -79,7 +91,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_create_two" />
-
+        app:layout_constraintTop_toBottomOf="@+id/tv_ingredients_create_post" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

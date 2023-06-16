@@ -5,25 +5,32 @@ import androidx.lifecycle.viewModelScope
 import com.example.ecocrafters.data.AuthRepository
 import com.example.ecocrafters.data.ResultOf
 import com.example.ecocrafters.data.remote.response.AuthResponse
-import com.example.ecocrafters.data.remote.response.PostResponse
-import kotlinx.coroutines.flow.SharingStarted
+import com.example.ecocrafters.data.remote.response.PostApiResponse
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
-class LoginViewModel(private val authRepository: AuthRepository): ViewModel() {
-    fun loginUser(email: String, password: String): StateFlow<ResultOf<AuthResponse>> {
-        return authRepository.loginUser(email, password).stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            ResultOf.Loading
-        )
+class LoginViewModel(private val authRepository: AuthRepository) : ViewModel() {
+
+    private val _loginState: MutableStateFlow<ResultOf<AuthResponse>?> = MutableStateFlow(null)
+    val loginState: StateFlow<ResultOf<AuthResponse>?> = _loginState
+
+    private val _passwordRequest: MutableStateFlow<ResultOf<PostApiResponse>?> = MutableStateFlow(null)
+    val passwordRequest: StateFlow<ResultOf<PostApiResponse>?> = _passwordRequest
+
+    fun loginUser(email: String, password: String) {
+        viewModelScope.launch {
+            authRepository.loginUser(email, password).collect {
+                _loginState.value = it
+            }
+        }
     }
 
-    fun sendChangePasswordCode(email: String): StateFlow<ResultOf<PostResponse>>{
-        return authRepository.sendChangePasswordRequest(email).stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(),
-            ResultOf.Loading
-        )
+    fun sendChangePasswordCodeRequest(email: String) {
+        viewModelScope.launch {
+            authRepository.sendChangePasswordRequest(email).collect {
+                _passwordRequest.value = it
+            }
+        }
     }
 }

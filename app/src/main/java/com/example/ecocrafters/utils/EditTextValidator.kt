@@ -1,6 +1,5 @@
 package com.example.ecocrafters.utils
 
-import android.util.Log
 import android.util.Patterns
 import com.google.android.material.textfield.TextInputLayout
 
@@ -28,10 +27,9 @@ object EditTextValidator {
     fun validateUsernameInput(textInput: TextInputLayout, text: CharSequence?, errorMessage: String) {
         val unicodeMatcher = """[^\u0000-\u02BF]""".toRegex()
         val containsUnicode = unicodeMatcher.containsMatchIn(text.toString())
-        Log.d("DoesNotContainUnicode", containsUnicode.toString())
         val containsSpace = text.toString().contains(' ')
-        Log.d("DoesNotContainSpace", containsSpace.toString())
-        if (containsSpace || containsUnicode) {
+        val characterCount = text.toString().length !in 4..32
+        if (containsSpace || containsUnicode || characterCount) {
             textInput.error = errorMessage
         } else {
             textInput.isErrorEnabled = false

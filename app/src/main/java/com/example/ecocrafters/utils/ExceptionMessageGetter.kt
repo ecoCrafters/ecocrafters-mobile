@@ -1,15 +1,15 @@
 package com.example.ecocrafters.utils
 
-import com.example.ecocrafters.data.remote.response.PostResponse
+import com.example.ecocrafters.data.remote.response.PostApiResponse
 import com.google.gson.Gson
 import retrofit2.HttpException
 import java.io.IOException
 
 internal object ExceptionMessageGetter {
-    fun HttpException.getHttpErrorBody(): PostResponse? {
+    private fun HttpException.getHttpErrorBody(): PostApiResponse? {
         val gson = Gson()
         val responseBody = this.response()?.errorBody()?.string()
-        return gson.fromJson(responseBody, PostResponse::class.java)
+        return gson.fromJson(responseBody, PostApiResponse::class.java)
     }
 
     fun Throwable.getErrorMessage(): String {

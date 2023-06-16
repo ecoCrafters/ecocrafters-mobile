@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.change_password.CheckCodeActivity">
+    tools:context=".ui.check_code.CheckCodeActivity">
 
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pin_confirm_check" />
 
     <View
-        android:id="@+id/ovelay_check_code"
+        android:id="@+id/overlay_check_code"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
@@ -83,10 +83,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/ovelay_check_code"
-        app:layout_constraintEnd_toEndOf="@id/ovelay_check_code"
-        app:layout_constraintStart_toStartOf="@id/ovelay_check_code"
-        app:layout_constraintTop_toTopOf="@+id/ovelay_check_code" />
+        app:layout_constraintBottom_toBottomOf="@+id/overlay_check_code"
+        app:layout_constraintEnd_toEndOf="@id/overlay_check_code"
+        app:layout_constraintStart_toStartOf="@id/overlay_check_code"
+        app:layout_constraintTop_toTopOf="@+id/overlay_check_code" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
     tools:context=".ui.more.MoreFragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iv_banner_more"
         android:layout_width="match_parent"
         android:layout_height="96dp"
         android:background="@color/black"
@@ -24,9 +24,9 @@
         app:cardBackgroundColor="@color/color_background_semi_transparent"
         app:cardCornerRadius="32dp"
         app:cardElevation="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_banner_more"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/iv_banner_more"
         app:layout_constraintWidth_percent="0.5">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -73,7 +73,7 @@
         app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView">
+        app:layout_constraintTop_toBottomOf="@+id/iv_banner_more">
 
         <ImageView
             android:layout_width="24dp"

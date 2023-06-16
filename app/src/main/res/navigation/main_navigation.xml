@@ -33,6 +33,25 @@
         android:label="@string/tambahan"
         tools:layout="@layout/fragment_more" />
 
-
+    <fragment
+        android:id="@+id/navigation_account_security"
+        android:name="com.example.ecocrafters.ui.account_security.AccountSecurityFragment"
+        android:label="fragment_account_security"
+        tools:layout="@layout/fragment_account_security" />
+    <fragment
+        android:id="@+id/navigation_saved_post"
+        android:name="com.example.ecocrafters.ui.saved_post.SavedPostFragment"
+        android:label="fragment_saved_post"
+        tools:layout="@layout/fragment_saved_post" />
+    <fragment
+        android:id="@+id/navigation_create_two"
+        android:name="com.example.ecocrafters.ui.create_two.CreatePostStepTwoFragment"
+        android:label="fragment_create_post_step_two"
+        tools:layout="@layout/fragment_create_post_step_two" />
+    <fragment
+        android:id="@+id/navigation_create_three"
+        android:name="com.example.ecocrafters.ui.create_three.CreatePostStepThreeFragment"
+        android:label="fragment_create_post_step_three"
+        tools:layout="@layout/fragment_create_post_step_three" />
 
 </navigation>

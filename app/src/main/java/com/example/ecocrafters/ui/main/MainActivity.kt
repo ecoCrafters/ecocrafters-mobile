@@ -1,19 +1,24 @@
 package com.example.ecocrafters.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.ecocrafters.R
 import com.example.ecocrafters.databinding.ActivityMainBinding
+import com.example.ecocrafters.utils.ViewModelFactory
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory
+            .getInstance(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,13 +28,10 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-//        val appBarConfiguration = AppBarConfiguration.Builder(
-//            R.id.navigation_home, R.id.navigation_search, R.id.navigation_create, R.id.navigation_more
-//        ).build()
-//
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        binding.bottomNavMain.setupWithNavController(navController)
         NavigationUI.setupWithNavController(binding.bottomNavMain, navController)
-
+        lifecycleScope.launch {
+            delay(2000)
+            viewModel.refreshToken()
+        }
     }
 }

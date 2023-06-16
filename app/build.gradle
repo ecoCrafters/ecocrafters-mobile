@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
-
 android {
     namespace 'com.example.ecocrafters'
     compileSdk 33
@@ -29,16 +29,17 @@ android {
     }
     compileOptions {
         coreLibraryDesugaringEnabled = true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         buildConfig true
         viewBinding true
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
+
 }
 
 dependencies {
@@ -62,11 +63,15 @@ dependencies {
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
     // Fragment Navigation Graph
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
 
     //desugaring
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:2.0.3"
+
+    // Glide Image Loader
+    kapt 'com.github.bumptech.glide:compiler:4.15.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.0'
 
     // API Caller
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -80,5 +85,7 @@ dependencies {
     implementation "androidx.camera:camera-camera2:1.2.3"
     implementation "androidx.camera:camera-lifecycle:1.2.3"
     implementation "androidx.camera:camera-view:1.2.3"
+
+    implementation 'com.github.onecode369:WYSIWYG:4.0'
 
 }

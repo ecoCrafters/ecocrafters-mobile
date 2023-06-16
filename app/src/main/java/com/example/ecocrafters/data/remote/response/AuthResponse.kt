@@ -38,7 +38,7 @@ data class AuthResponse(
 	val email: String,
 
 	@field:SerializedName("eco_points")
-	val ecoPoints: String,
+	val ecoPoints: Int,
 
 	@field:SerializedName("username")
 	val username: String
