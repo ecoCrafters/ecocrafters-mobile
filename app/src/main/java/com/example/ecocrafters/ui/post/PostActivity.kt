@@ -37,6 +37,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
 
     private var slug: String? = null
     private var postId: Int? = null
+    private var isSaved: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,8 +63,10 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
             null
         }
         startSubscription()
+
         lifecycleScope.launch {
             viewModel.updatePost(slug ?: "", postId ?: -1)
+            viewModel.checkSavedPost(postId ?: -1)
         }
 
         setSupportActionBar(binding.toolbarDetailPost)
@@ -75,40 +78,62 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
             btnLikeDetailPost.setOnClickListener(this@PostActivity)
             btnBookmarkDetailPost.setOnClickListener(this@PostActivity)
             btnCommentDetailPost.setOnClickListener(this@PostActivity)
-
         }
 
     }
 
     private fun startSubscription() {
         lifecycleScope.launch {
-                viewModel.postState.collect {
-                    renderResultPost(it)
-                }
+            viewModel.postState.collect {
+                renderResultPost(it)
+            }
         }
 
         lifecycleScope.launch {
-                viewModel.likePostState.collect {
-                    renderResultApiResponse(it)
-                }
+            viewModel.likePostState.collect {
+                renderResultApiResponse(it)
+            }
         }
 
         lifecycleScope.launch {
-                viewModel.likeCommentState.collect {
-                    renderResultApiResponse(it)
-                }
+            viewModel.likeCommentState.collect {
+                renderResultApiResponse(it)
+            }
         }
 
         lifecycleScope.launch {
-                viewModel.commentPostState.collect {
-                    renderResultComment(it)
-                }
+            viewModel.commentPostState.collect {
+                renderResultComment(it)
+            }
         }
 
         lifecycleScope.launch {
-                viewModel.savePostState.collect {
-                    renderResultApiResponse(it)
+            viewModel.savePostState.collect {
+                renderResultSave(it)
+            }
+        }
+
+        lifecycleScope.launch {
+            viewModel.savedState.collect { result ->
+                when (result) {
+                    is ResultOf.Error -> showToast(result.error)
+                    is ResultOf.Success -> {
+                        isSaved = result.data
+                        val buttonColor = if (isSaved) {
+                            com.google.android.material.R.attr.colorPrimary
+                        } else {
+                            com.google.android.material.R.attr.colorOnBackground
+                        }
+                        binding.btnBookmarkDetailPost.iconTint =
+                            MaterialColors.getColorStateListOrNull(
+                                this@PostActivity,
+                                buttonColor
+                            )
+                    }
+
+                    else -> {}
                 }
+            }
         }
     }
 
@@ -159,6 +184,21 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun renderResultSave(result: ResultOf<PostApiResponse>?) {
+        when (result) {
+            is ResultOf.Error -> {
+                showToast(result.error)
+                viewModel.checkSavedPost(postId?:-1)
+            }
+
+            is ResultOf.Success -> {
+                showToast(result.data.message)
+            }
+
+            else -> {}
+        }
+    }
+
     private fun setPostContent(post: PostDetailResponse) {
         binding.apply {
             webView.loadData(
@@ -195,7 +235,7 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
             tvNumLikesDetailPost.text = post.numOfLikes.toString()
             tvNumCommentsDetailPost.text = post.numOfComments.toString()
 
-            cvUserDetailPost.setOnClickListener{
+            cvUserDetailPost.setOnClickListener {
                 val intent = Intent(this@PostActivity, UserActivity::class.java).apply {
                     putExtra(UserActivity.ARG_USERNAME, post.user.username)
                 }
@@ -234,18 +274,21 @@ class PostActivity : AppCompatActivity(), View.OnClickListener {
         binding.apply {
             when (v?.id) {
                 btnLikeDetailPost.id -> {
-                    viewModel.updateLikePost(postId?: -1)
+                    viewModel.updateLikePost(postId ?: -1)
                 }
+
                 btnCommentDetailPost.id -> {
-                    showCommentBottomSheetDialog(this@PostActivity){
-                        viewModel.updateCommentPost(postId?:-1,it)
+                    showCommentBottomSheetDialog(this@PostActivity) {
+                        viewModel.updateCommentPost(postId ?: -1, it)
                     }
                 }
-                btnBookmarkDetailPost.id -> {
-                    viewModel.updateSavePost(postId ?: -1)
-                }
-                cvUserDetailPost.id -> {
 
+                btnBookmarkDetailPost.id -> {
+                    if (isSaved) {
+                        viewModel.updateUnsavePost(postId ?: -1)
+                    } else {
+                        viewModel.updateSavePost(postId ?: -1)
+                    }
                 }
             }
         }

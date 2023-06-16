@@ -24,9 +24,9 @@ class SavedPostViewModel(private val userRepository: UserRepository): ViewModel(
         MutableStateFlow(null)
     val commentPostState: StateFlow<ResultOf<PostApiResponse>?> = _commentPostState
 
-    private val _savePostState: MutableStateFlow<ResultOf<PostApiResponse>?> =
+    private val _unsavePostState: MutableStateFlow<ResultOf<PostApiResponse>?> =
         MutableStateFlow(null)
-    val savePostState: StateFlow<ResultOf<PostApiResponse>?> = _savePostState
+    val unsavePostState: StateFlow<ResultOf<PostApiResponse>?> = _unsavePostState
 
     fun updateSavedPost(){
         viewModelScope.launch {
@@ -52,10 +52,10 @@ class SavedPostViewModel(private val userRepository: UserRepository): ViewModel(
         }
     }
 
-    fun updateSavePost(idPost: Int){
+    fun updateUnsavePost(idPost: Int){
         viewModelScope.launch {
-            userRepository.savePost(idPost).collect{
-                _savePostState.value = it
+            userRepository.unsavePost(idPost).collect{
+                _unsavePostState.value = it
             }
         }
     }

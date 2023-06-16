@@ -75,7 +75,7 @@ class SavedPostFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.savePostState.collect {
+            viewModel.unsavePostState.collect {
                 renderResultApiResponse(it)
             }
         }
@@ -109,7 +109,7 @@ class SavedPostFragment : Fragment() {
                         }
                         setOnSaveCallback {
                             lifecycleScope.launch {
-                                viewModel.updateSavePost(it)
+                                viewModel.updateUnsavePost(it)
                             }
                         }
                         setOnItemClickCallback {

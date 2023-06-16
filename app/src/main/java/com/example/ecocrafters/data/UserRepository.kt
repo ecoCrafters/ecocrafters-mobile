@@ -350,6 +350,36 @@ class UserRepository(
         }
     }
 
+    fun unsavePost(idPost: Int): Flow<ResultOf<PostApiResponse>> = flow {
+        emit(ResultOf.Loading)
+        try {
+            val token = userPreferences.getToken().first()
+            if (token.isNullOrEmpty()) {
+                throw IllegalStateException("The user is not logged in yet")
+            } else {
+                val response = apiService.unsavePost("Bearer $token", idPost)
+                emit(ResultOf.Success(response))
+            }
+        } catch (throwable: Throwable) {
+            emit(ResultOf.Error(throwable.getErrorMessage()))
+        }
+    }
+
+    fun checkSavedPost(idPost: Int): Flow<ResultOf<Boolean>> = flow {
+        emit(ResultOf.Loading)
+        try {
+            val token = userPreferences.getToken().first()
+            if (token.isNullOrEmpty()) {
+                throw IllegalStateException("The user is not logged in yet")
+            } else {
+                val response = apiService.checkSavedPost("Bearer $token", idPost)
+                emit(ResultOf.Success(response))
+            }
+        } catch (throwable: Throwable) {
+            emit(ResultOf.Error(throwable.getErrorMessage()))
+        }
+    }
+
     // Tag Feature
     fun getAllTag(): Flow<ResultOf<List<TagResponse>>> = flow {
         emit(ResultOf.Loading)

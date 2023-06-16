@@ -177,6 +177,17 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id_post") idPost: Int
     ): PostApiResponse
+    @POST("post/unsave/{id_post}")
+    suspend fun unsavePost(
+        @Header("Authorization") token: String,
+        @Path("id_post") idPost: Int
+    ): PostApiResponse
+
+    @GET("post/check-saved-post/{id_post}")
+    suspend fun checkSavedPost(
+        @Header("Authorization") token: String,
+        @Path("id_post") idPOST: Int
+    ): Boolean
 
     @POST("post/like/{id_post}")
     suspend fun likePost(

@@ -28,15 +28,6 @@
             app:shapeAppearanceOverlay="@style/Theme.EcoCrafters.CircleImageViewStyle"
             tools:src="@tools:sample/avatars" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_notif_home"
-            style="@style/Widget.Material3.Button.IconButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            app:icon="@drawable/ic_bell_outline"
-            android:contentDescription="@string/notification"
-            />
     </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.recyclerview.widget.RecyclerView
