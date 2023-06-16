@@ -14,7 +14,7 @@
         android:id="@+id/navigation_scan"
         android:enabled="true"
         android:icon="@drawable/ic_cube_scan"
-        android:title="@string/scan" />
+        android:title="@string/pindai" />
     <item
         android:id="@+id/navigation_create"
         android:enabled="true"
