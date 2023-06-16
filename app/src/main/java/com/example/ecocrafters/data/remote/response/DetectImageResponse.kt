@@ -10,6 +10,9 @@ data class DetectImageResponse(
 	@field:SerializedName("posts")
 	val posts: List<PostInfoResponse>,
 
+	@field:SerializedName("ingredients")
+	val ingredients: List<IngredientsResponse>,
+
 	@field:SerializedName("status")
 	val status: Int
 )

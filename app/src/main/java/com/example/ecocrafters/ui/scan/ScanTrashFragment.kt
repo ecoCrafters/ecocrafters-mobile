@@ -3,10 +3,13 @@ package com.example.ecocrafters.ui.scan
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -17,6 +20,8 @@ import androidx.fragment.app.Fragment
 import com.example.ecocrafters.databinding.FragmentScanTrashBinding
 import com.example.ecocrafters.ui.scan_result.ScanResultActivity
 import com.example.ecocrafters.utils.FileUtils
+import com.example.ecocrafters.utils.FileUtils.reduceFileImage
+import com.example.ecocrafters.utils.FileUtils.uriToFile
 import com.example.ecocrafters.utils.showToast
 
 
@@ -26,6 +31,21 @@ class ScanTrashFragment : Fragment(), View.OnClickListener {
     private var cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
     private var imageCapture: ImageCapture? = null
 
+    private val launcherIntentGallery = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+            val image = result.data?.data as Uri
+
+            val imageFile = uriToFile(image, requireContext())
+            val reducedImageFile = reduceFileImage(imageFile, 100000)
+
+            val intent = Intent(requireContext(), ScanResultActivity::class.java)
+            intent.putExtra(ScanResultActivity.ARG_IMAGE_CAPTURED, reducedImageFile)
+            startActivity(intent)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,7 +53,6 @@ class ScanTrashFragment : Fragment(), View.OnClickListener {
         binding = FragmentScanTrashBinding.inflate(inflater, container, false)
         return binding?.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (!allPermissionsGranted()){
@@ -49,6 +68,7 @@ class ScanTrashFragment : Fragment(), View.OnClickListener {
             ivSwitchCamera.setOnClickListener(this@ScanTrashFragment)
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -103,13 +123,23 @@ class ScanTrashFragment : Fragment(), View.OnClickListener {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val reducedImageFile = reduceFileImage(photoFile, 100000)
                     val intent = Intent(requireContext(), ScanResultActivity::class.java)
-                    intent.putExtra(ScanResultActivity.ARG_IMAGE_CAPTURED, photoFile)
+                    intent.putExtra(ScanResultActivity.ARG_IMAGE_CAPTURED, reducedImageFile)
                     startActivity(intent)
                 }
             }
         )
     }
+
+    private fun startGalleryChooser() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        val galleryChooser = Intent.createChooser(intent, "Pilih Foto Dari Galeri")
+        launcherIntentGallery.launch(galleryChooser)
+    }
+
+
     override fun onClick(v: View) {
         binding?.apply {
             when(v.id){
@@ -123,7 +153,7 @@ class ScanTrashFragment : Fragment(), View.OnClickListener {
                     startCamera()
                 }
                 ivOpenGallery.id -> {
-
+                    startGalleryChooser()
                 }
             }
         }

@@ -42,7 +42,7 @@ object FileUtils {
         return File(outputDirectory, "$timeStamp.jpg")
     }
 
-    fun reduceFileImage(file: File): File {
+    fun reduceFileImage(file: File, minByte:Int): File {
         val bitmap = BitmapFactory.decodeFile(file.path)
         var compressQuality = 100
         var streamLength: Int
@@ -52,9 +52,13 @@ object FileUtils {
             val bmpPicByteArray = bmpStream.toByteArray()
             streamLength = bmpPicByteArray.size
             compressQuality -= 5
-        } while (streamLength > 1000000)
+        } while (streamLength > minByte)
         bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
         return file
+    }
+
+    fun reduceFileImage(file: File): File {
+        return reduceFileImage(file, 1000000)
     }
 
     fun uriToFile(selectedImg: Uri, context: Context): File {

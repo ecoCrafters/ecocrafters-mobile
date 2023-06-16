@@ -119,7 +119,7 @@ class AuthRepository private constructor(
         return try {
             val accessToken = userPreferences.getAccessToken().first()
             if (accessToken != null) {
-                if (InstantHelper.toBetweenNowSeconds(accessToken.TokenCreated) > 300) {
+                if (InstantHelper.toBetweenNowSeconds(accessToken.TokenCreated) > 400) {
                     val response = apiService.refreshToken("Bearer ${accessToken.token}")
                     userPreferences.saveAccessToken(response.token, Instant.now())
                     true

@@ -311,17 +311,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="?colorPrimary"
-                android:hint="Latex Equation"
+                android:hint="@string/latex_equation"
                 android:inputType="text"
                 android:minWidth="320dp"
-                android:textColorHint="?colorPrimary" />
+                android:textColorHint="?colorPrimary"
+                android:importantForAutofill="no" />
 
             <Button
                 android:id="@+id/submit_latex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="?colorPrimary"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:textAllCaps="false"
                 android:textColor="#FFF" />
 

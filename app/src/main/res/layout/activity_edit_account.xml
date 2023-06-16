@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Foto Profil"
+                android:text="@string/foto_profil"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_edit_photo_edit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/btn_edit_photo_edit" />

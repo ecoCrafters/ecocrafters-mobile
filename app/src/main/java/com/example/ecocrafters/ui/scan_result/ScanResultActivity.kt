@@ -19,7 +19,11 @@ import com.example.ecocrafters.ui.user.UserActivity
 import com.example.ecocrafters.utils.ViewModelFactory
 import com.example.ecocrafters.utils.showCommentBottomSheetDialog
 import com.example.ecocrafters.utils.showToast
+import com.google.android.material.chip.Chip
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class ScanResultActivity : AppCompatActivity() {
@@ -58,11 +62,29 @@ class ScanResultActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         startSubscription()
+        detectImage()
+    }
+
+    private fun detectImage() {
+        lifecycleScope.launch {
+            val getFile = file
+            if (getFile != null) {
+                val requestImageFile = getFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "image",
+                    getFile.name,
+                    requestImageFile
+                )
+                viewModel.updateDetectImage(imageMultipart)
+            } else {
+                finish()
+            }
+        }
     }
 
     private fun startSubscription() {
         lifecycleScope.launch {
-            viewModel.detectImageState.collect{
+            viewModel.detectImageState.collect {
                 renderResult(it)
             }
         }
@@ -100,7 +122,7 @@ class ScanResultActivity : AppCompatActivity() {
     }
 
     private fun renderResult(result: ResultOf<DetectImageResponse>?) {
-        when(result){
+        when (result) {
             ResultOf.Loading -> showLoading(true)
             is ResultOf.Success -> {
                 showLoading(false)
@@ -117,10 +139,11 @@ class ScanResultActivity : AppCompatActivity() {
                             }
                         }
                         setOnItemClickCallback {
-                            val intent = Intent(this@ScanResultActivity, PostActivity::class.java).apply {
-                                putExtra(PostActivity.ARG_SLUG, it.slug)
-                                putExtra(PostActivity.ARG_POST_ID, it.id)
-                            }
+                            val intent =
+                                Intent(this@ScanResultActivity, PostActivity::class.java).apply {
+                                    putExtra(PostActivity.ARG_SLUG, it.slug)
+                                    putExtra(PostActivity.ARG_POST_ID, it.id)
+                                }
                             startActivity(intent)
                         }
                         setOnCommentCallback { postId ->
@@ -129,9 +152,10 @@ class ScanResultActivity : AppCompatActivity() {
                             }
                         }
                         setOnUserClickCallback {
-                            val intent = Intent(this@ScanResultActivity, UserActivity::class.java).apply {
-                                putExtra(UserActivity.ARG_USERNAME, it)
-                            }
+                            val intent =
+                                Intent(this@ScanResultActivity, UserActivity::class.java).apply {
+                                    putExtra(UserActivity.ARG_USERNAME, it)
+                                }
                             startActivity(intent)
                         }
                     }
@@ -140,13 +164,29 @@ class ScanResultActivity : AppCompatActivity() {
                         adapter = rvAdapter
                         layoutManager = rvLayoutManager
                     }
+
                 } else {
                     binding.tvEmptyPostSearch.isVisible = true
                 }
+                binding.apply {
+                    chipGroupScanResult.removeAllViews()
+                    if (result.data.ingredients.isNotEmpty()) {
+                        chipGroupScanResult.removeAllViews()
+                        result.data.ingredients.forEach { ingredient ->
+                            chipGroupScanResult.addView(
+                                Chip(this@ScanResultActivity).apply {
+                                    text = ingredient.name
+                                }
+                            )
+                        }
+                    }
+                }
             }
+
             is ResultOf.Error -> {
                 showLoading(false)
             }
+
             null -> {}
         }
     }
